@@ -22,6 +22,17 @@ This project documents my custom DIY home server and NAS setup — built with en
 |                  | 2x SFF-8643 to 4x SATA Cables | [Amazon](https://www.amazon.de/dp/B00X8ZB63O) |
 ---
 
+## 🧬 BIOS Configuration
+
+This build uses a **custom BIOS** specifically required for the CWWK Q670 motherboard to unlock key **power-saving features** such as **ASPM (Active State Power Management)**. These features are essential for reducing idle power draw and improving overall energy efficiency.
+
+- The custom BIOS is included in this repository under `/bios/`.
+- Flashing instructions and tools are also provided.
+- Stock BIOS lacks full ASPM support and limits some PCIe power options.
+- Tested and verified for this specific hardware configuration
+
+> ⚠️ **Note:** Flashing the custom BIOS is **optional**. The system works well with the stock BIOS, but flashing is **recommended if maximum power efficiency is desired**.
+
 ## ⚙️ Software Configuration
 
 ### 🧠 Hypervisor: **Proxmox VE**
