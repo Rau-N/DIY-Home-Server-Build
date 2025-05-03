@@ -81,3 +81,7 @@ This build uses a **custom BIOS** specifically required for the CWWK Q670 mother
 - Proxmox UI + VM configuration screenshots
 
 ---
+
+## 📚 Additional Documentation
+
+- 🔐 [ZFS Configuration with OpenMediaVault](docs/zfs-setup.md)
