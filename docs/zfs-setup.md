@@ -4,25 +4,76 @@ This section documents how the ZFS storage pool is configured inside the OpenMed
 
 ---
 
+## ⚠️ Prerequisite: Enable IOMMU for PCI Passthrough
+
+In order to pass through the SATA controller to the OMV VM, **IOMMU support** must be enabled on the Proxmox host.
+
+---
+
+### 1. Enable IOMMU in Kernel Boot Parameters (systemd-boot)
+
+Edit the kernel command line:
+
+```bash
+vi /etc/kernel/cmdline
+```
+
+Append or modify the following line:
+
+```
+root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=on iommu=pt
+```
+
+Then refresh the bootloader:
+
+```bash
+pve-efiboot-tool refresh
+```
+
+---
+
+### 2. Load VFIO Kernel Modules
+
+Append the following lines to `/etc/modules`:
+
+```bash
+echo "vfio" >> /etc/modules
+echo "vfio_iommu_type1" >> /etc/modules
+echo "vfio_pci" >> /etc/modules
+```
+
+---
+
+### 3. Regenerate initramfs and Reboot
+
+Run:
+
+```bash
+update-initramfs -u -k all
+systemctl reboot
+```
+
+Once rebooted, you can continue with PCI passthrough configuration.
+
 ## 1. Pass through the SATA Controller to the OMV VM
 
 To enable SMART and full disk control inside OMV, the SATA controller must be passed through from Proxmox to the VM.
 
-- a. Go to your OMV VM in Proxmox → **Hardware → Add → PCI Device**
+- Go to your OMV VM in Proxmox → **Hardware → Add → PCI Device**
 
 ![OMV VM Hardware Overview](../images/omv-vm-hardware.png)
 
-- b. Select the **SATA controller** from the PCI device list.
+- Select the **SATA controller** from the PCI device list.
 
 ![SATA Controller Selected](../images/omv-vm-hardware-sata-controller-selected.png)
 
-- c. Confirm the device is added under the VM’s hardware list.
+![PCI Devices Overview](../images/omv-vm-hardware-pci-devices.png)
+
+- Confirm the device is added under the VM’s hardware list.
 
 ![SATA Controller Added](../images/omv-vm-hardware-sata-controller-added.png)
 
-- d. Optional: Review all PCI devices passed to the VM.
 
-![PCI Devices Overview](../images/omv-vm-hardware-pci-devices.png)
 
 - Start the OMV VM
 - Check with `lspci` if the SATA controller gets recognized
@@ -31,10 +82,33 @@ To enable SMART and full disk control inside OMV, the SATA controller must be pa
 lspci | grep SATA
 ```
 
+```bash
+00:1f.2 SATA controller: Intel Corporation 82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] (rev 02)
+01:00.0 SATA controller: Intel Corporation Alder Lake-S PCH SATA Controller [AHCI Mode] (rev 11)
+```
+
 - Check if the hard drives are detected using:
 
 ```bash
 lsblk
+```
+
+```bash
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0   32G  0 disk
+├─sda1   8:1    0   31G  0 part /
+├─sda2   8:2    0    1K  0 part
+└─sda5   8:5    0  975M  0 part [SWAP]
+sdb      8:16   0 10,9T  0 disk
+├─sdb1   8:17   0 10,9T  0 part
+└─sdb9   8:25   0    8M  0 part
+sdc      8:32   0 10,9T  0 disk
+├─sdc1   8:33   0 10,9T  0 part
+└─sdc9   8:41   0    8M  0 part
+sdd      8:48   0 10,9T  0 disk
+├─sdd1   8:49   0 10,9T  0 part
+└─sdd9   8:57   0    8M  0 part
+sr0     11:0    1 1024M  0 rom
 ```
 
 Or via the **OMV Web UI → Storage → Disks**
