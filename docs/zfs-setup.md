@@ -44,7 +44,19 @@ echo "vfio_pci" >> /etc/modules
 
 ---
 
-### 3. Regenerate initramfs and Reboot
+### 3. Blacklist SATA Controller Driver on Host
+
+Since the controller will be passed to OMV, the host should not load the `ahci` driver:
+
+```bash
+echo "blacklist ahci" >> /etc/modprobe.d/blacklist.conf
+```
+
+This prevents the Proxmox host from binding to the controller before VFIO can claim it.
+
+---
+
+### 4. Regenerate initramfs and Reboot
 
 Run:
 
