@@ -84,5 +84,5 @@ This build uses a **custom BIOS** specifically required for the CWWK Q670 mother
 
 ## 📚 Additional Documentation
 
-- 🔐 [ZFS Configuration with OpenMediaVault](docs/zfs-setup.md)
 - ⚙️ [Custom BIOS Power-Saving Configuration](configs/bios-settings.md)
+- 🔐 [ZFS Configuration with OpenMediaVault](docs/zfs-setup.md)

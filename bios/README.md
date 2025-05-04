@@ -44,8 +44,7 @@ Your USB root must contain the `EFI/` folder, `CW-Q670-PLUS/`, and `auto.nsh`.
 ## ▶️ Step 3: Flash the BIOS
 
 1. Insert the USB stick into the system
-2. Power on and press `F7` or `F11` (depending on board) to access **Boot Menu**
-3. Select **UEFI: [your USB stick]**
+2. Power on and boot from the USB stick
 4. The system will enter the UEFI shell and automatically execute `auto.nsh`
 
 If successful, the flashing process will begin automatically. Follow any on-screen instructions.
