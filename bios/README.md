@@ -62,4 +62,3 @@ If successful, the flashing process will begin automatically. Follow any on-scre
 ## 🔗 Related
 
 - [BIOS Configuration Guide](../configs/bios-settings.md)
-- [ZFS + IOMMU Setup](../docs/zfs-setup.md)
