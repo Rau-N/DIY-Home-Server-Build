@@ -142,5 +142,5 @@ powertop --auto-tune
 
 ## 🔗 Related
 
-- [BIOS Power-Saving Configuration](../configs/bios-settings.md)
+- [Custom BIOS Power-Saving Configuration](../configs/bios-settings.md)
 
