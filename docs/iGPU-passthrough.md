@@ -4,6 +4,9 @@ This guide documents how to passthrough the integrated GPU (iGPU) of an Intel CP
 
 ---
 
+> ⚠️ **IOMMU must be enabled** to pass through the iGPU. Follow the guide here: [Enabling IOMMU on Proxmox](./iommu.md)
+
+
 ### 🔍 Identify the iGPU PCI Address (on host)
 
 Run this command on the **Proxmox host**:

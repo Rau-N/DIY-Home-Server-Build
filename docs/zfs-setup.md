@@ -4,68 +4,7 @@ This section documents how the ZFS storage pool is configured inside the OpenMed
 
 ---
 
-## ⚠️ Prerequisite: Enable IOMMU for PCI Passthrough
-
-In order to pass through the SATA controller to the OMV VM, **IOMMU support** must be enabled on the Proxmox host.
-
----
-
-### 1. Enable IOMMU in Kernel Boot Parameters (systemd-boot)
-
-Edit the kernel command line:
-
-```bash
-vi /etc/kernel/cmdline
-```
-
-Append or modify the following line:
-
-```
-root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=on iommu=pt
-```
-
-Then refresh the bootloader:
-
-```bash
-pve-efiboot-tool refresh
-```
-
----
-
-### 2. Load VFIO Kernel Modules
-
-Append the following lines to `/etc/modules`:
-
-```bash
-echo "vfio" >> /etc/modules
-echo "vfio_iommu_type1" >> /etc/modules
-echo "vfio_pci" >> /etc/modules
-```
-
----
-
-### 3. Blacklist SATA Controller Driver on Host
-
-Since the controller will be passed to OMV, the host should not load the `ahci` driver:
-
-```bash
-echo "blacklist ahci" >> /etc/modprobe.d/blacklist.conf
-```
-
-This prevents the Proxmox host from binding to the controller before VFIO can claim it.
-
----
-
-### 4. Regenerate initramfs and Reboot
-
-Run:
-
-```bash
-update-initramfs -u -k all
-systemctl reboot
-```
-
-Once rebooted, you can continue with PCI passthrough configuration.
+> ⚠️ **IOMMU must be enabled** to pass through the SATA controller. Follow the guide here: [Enabling IOMMU on Proxmox](./iommu.md)
 
 ## 1. Pass through the SATA Controller to the OMV VM
 

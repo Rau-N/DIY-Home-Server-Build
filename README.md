@@ -87,3 +87,4 @@ This build uses a **custom BIOS** specifically required for the CWWK Q670 mother
 - ⚙️ [Custom BIOS Power-Saving Configuration](configs/bios-settings.md)
 - 🔋 [Energy Management for Proxmox Host](configs/energy-management.md)
 - 🔐 [ZFS Configuration with OpenMediaVault](docs/zfs-setup.md)
+- 🎮 [Intel iGPU Passthrough to Ubuntu VM](docs/igpu-passthrough.md)

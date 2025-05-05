@@ -101,4 +101,4 @@ If you see `ASPM L1 Enabled` across all relevant devices, ASPM is successfully a
 
 - [BIOS flashing instructions](../bios/README.md)
 - [Energy Management for Proxmox Host](../configs/energy-management.md)
-- [ZFS + IOMMU Setup Guide](../docs/zfs-setup.md)
+- [ZFS Configuration with OpenMediaVault](../docs/zfs-setup.md)
